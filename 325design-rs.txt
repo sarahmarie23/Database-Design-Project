@@ -1,0 +1,63 @@
+Sarah Jimenez
+CS 325 – Fall 2021
+Last modified 11/19/21
+
+BSA_Member(BSA_ID, member_type, first_name, last_name)
+
+Scout(BSA_ID, is_CIT, birthdate, parent_fname, parent_lname, parent_phone, swim_test_pass,          shirt_size)
+	Foreign key (bsa_id) references BSA_Member
+
+CIT(BSA_ID, volunteer_hours)
+	Foreign key (bsa_id) references Scout
+
+Adult(BSA_ID, phone, email)
+	Foreign key (bsa_id) references BSA_Member
+
+Adult_Jobs_List(BSA_ID, JOB_TITLE)
+	Foreign key (bsa_id) references Adult
+
+Sessions(SESSION_ID, start_date, end_date)
+(can’t use session because it is a reserved key in SQL!)
+
+Session_Registration(SESSION_ID, BSA_ID, session_format)
+	Foreign key (session_id) references Session
+	Foreign key (bsa_id) references Scout
+
+AM_Registration(SESSION_REG_ID,  early_drop_off)
+	Foreign key (session_reg_id) references Session_Registration
+
+PM_Registration(SESSION_REG_ID, late_pick_up)
+	Foreign key (session_reg_id) references Session_Registration
+
+Full_Day_Registration(SESSION_REG_ID, early_drop_off, late_pick_up)
+	Foreign key (session_reg_id) references Session_Registration
+
+Schedule_of_Classes(SESSION_ID, COURSE_ID)
+	Foreign key (session_id) references Sessions
+	Foreign key (course_id) references Course_Offering
+
+Course_Registration(BSA_ID, COURSE_ID, date_registered, date_completed)
+	Foreign key (bsa_id) references Scout
+	Foreign key (course_id) references Course_offering
+	
+
+Course_Offering(COURSE_ID, course_name, bsa_id, location, max_capacity, badge_name)
+	Foreign key (bsa_id) references CIT
+	Foreign key (badge_name) references Merit_Badge
+	
+
+Course_Offering_Instructors(COURSE_ID, BSA_ID)
+	Foreign key (course_id) references Course_Offering
+	Foreign key (bsa_id) references Adult
+
+Course_Offering_Period(COURSE_ID, PERIOD)
+	Foreign key (course_id) references Course_Offering
+
+Merit_Badge(BADGE_NAME, swim_test_required, eagle_required)
+
+Merit_Badges_Earned(BSA_ID, BADGE_NAME)
+	Foreign key (bsa_id) references Scout
+	Foreign key (badge_name) references Merit_Badge
+
+
+
